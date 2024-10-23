@@ -1,5 +1,6 @@
 import React from 'react';
-import { Grid } from '@mui/material';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid2'; // Grid version 2
 import { Product } from '../types/types';
 import ProductCard from './ProductCard';
 
@@ -9,13 +10,15 @@ interface ProductListProps {
 
 const ProductList: React.FC<ProductListProps> = ({ products }) => {
   return (
-    <Grid container spacing={2}>
-      {products.map((product) => (
-        <Grid item key={product.id} xs={12} sm={3} md={2}>
-          <ProductCard product={product} />
-        </Grid>
-      ))}
-    </Grid>
+    <Box sx={{ flexGrow: 1, padding: 1 }}>
+      <Grid container spacing={2}>
+        {products.map((product) => (
+          <Grid size={{ xs: 12, sm: 6, md: 3, lg: 2 }} key={product.id}>
+            <ProductCard product={product} />
+          </Grid>
+        ))}
+      </Grid>
+    </Box>
   );
 };
 

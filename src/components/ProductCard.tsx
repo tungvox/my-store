@@ -21,9 +21,9 @@ const StyledCard = styled(Card)(({ theme }) => ({
   },
 }));
 
-const StyledCardMedia = styled(CardMedia)({
-  paddingTop: '56.25%', // 16:9 aspect ratio
-  objectFit: 'cover',
+const StyledCardMedia = styled(CardMedia)<{ component?: React.ElementType }>({
+  height: 200,
+  objectFit: 'contain',
 });
 
 const StyledLink = styled(Link)({
@@ -48,6 +48,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, isCheckout = false }
   return (
     <StyledCard>
       <StyledCardMedia
+        component="img"
         image={product.image}
         title={product.title}
       />

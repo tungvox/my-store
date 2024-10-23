@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Grid, Typography, Box } from '@mui/material';
+import { Typography, Box } from '@mui/material';
 import { AppDispatch, RootState } from '../store/store';
 import { fetchProducts } from '../store/productSlice';
 import ProductList from '../components/ProductList';
@@ -8,7 +8,7 @@ import Filters from '../components/Filters';
 
 const Home: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { items, status, error } = useSelector((state: RootState) => state.products);
+  const { filteredItems, status, error } = useSelector((state: RootState) => state.products);
 
   useEffect(() => {
     if (status === 'idle') {
@@ -25,18 +25,19 @@ const Home: React.FC = () => {
   }
 
   return (
-    <Box sx={{ width: '100%' }}>
-      <Typography variant="h4" component="h1" gutterBottom>
-        E-commerce Product Listing
-      </Typography>
-      <Grid container spacing={3}>
-        <Grid item xs={12} md={3}>
+    <Box sx={{ width: '100%', paddingTop: 1 }}>
+      <Box sx={{
+        display: 'flex',
+        flexDirection: { xs: 'column', md: 'row' },
+        gap: 3
+      }}>
+        <Box sx={{ width: { xs: '100%', md: '25%' } }}>
           <Filters />
-        </Grid>
-        <Grid item xs={12} md={9}>
-          <ProductList products={items} />
-        </Grid>
-      </Grid>
+        </Box>
+        <Box sx={{ width: { xs: '100%', md: '75%' } }}>
+          <ProductList products={filteredItems} />
+        </Box>
+      </Box>
     </Box>
   );
 };
