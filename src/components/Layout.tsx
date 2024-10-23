@@ -30,7 +30,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           </Button>
         </Toolbar>
       </AppBar>
-      <Box component="main" sx={{ flexGrow: 1, p: 3, width: '100%' }}>
+      <Box component="main" sx={{ flexGrow: 1, width: '100%' }}>
         {children}
       </Box>
     </Box>

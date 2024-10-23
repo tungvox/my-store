@@ -3,10 +3,11 @@ import { useDispatch } from 'react-redux';
 import { Card, CardContent, CardMedia, Typography, Button, Box, styled } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { Product } from '../types/types';
-import { addToCart } from '../store/cartSlice';
+import { addToCart, removeFromCart } from '../store/cartSlice';
 
 interface ProductCardProps {
   product: Product;
+  isCheckout?: boolean;
 }
 
 const StyledCard = styled(Card)(({ theme }) => ({
@@ -33,11 +34,15 @@ const StyledLink = styled(Link)({
   },
 });
 
-const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+const ProductCard: React.FC<ProductCardProps> = ({ product, isCheckout = false }) => {
   const dispatch = useDispatch();
 
   const handleAddToCart = () => {
     dispatch(addToCart(product));
+  };
+
+  const handleRemoveFromCart = () => {
+    dispatch(removeFromCart(product.id));
   };
 
   return (
@@ -56,20 +61,31 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           ${product.price.toFixed(2)}
         </Typography>
         <Box sx={{ mt: 'auto' }}>
-          <Button
-            variant="contained"
-            onClick={handleAddToCart}
-            fullWidth
-            sx={{
-              mt: 2,
-              backgroundColor: (theme) => theme.palette.primary.main,
-              '&:hover': {
-                backgroundColor: (theme) => theme.palette.primary.dark,
-              },
-            }}
-          >
-            Add to Cart
-          </Button>
+          {isCheckout ? (
+            <Button
+              variant="outlined"
+              onClick={handleRemoveFromCart}
+              fullWidth
+              sx={{ mt: 2 }}
+            >
+              Remove from Cart
+            </Button>
+          ) : (
+            <Button
+              variant="contained"
+              onClick={handleAddToCart}
+              fullWidth
+              sx={{
+                mt: 2,
+                backgroundColor: (theme) => theme.palette.primary.main,
+                '&:hover': {
+                  backgroundColor: (theme) => theme.palette.primary.dark,
+                },
+              }}
+            >
+              Add to Cart
+            </Button>
+          )}
         </Box>
       </CardContent>
     </StyledCard>
