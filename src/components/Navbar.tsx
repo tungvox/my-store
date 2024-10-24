@@ -13,9 +13,10 @@ import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Link as RouterLink } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../store/store'; 
 import theme from '../theme';
+import { setFilter } from '../store/productSlice';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -93,6 +94,12 @@ export default function Navbar() {
     </Menu>
   );
 
+  const dispatch = useDispatch();
+
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(setFilter({ searchTerm: event.target.value }));
+  };
+
   return (
     <Box>
       <AppBar position="static" sx={{ backgroundColor: theme.palette.primary.main }}>
@@ -113,6 +120,7 @@ export default function Navbar() {
             <StyledInputBase
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
+              onChange={handleSearchChange}
             />
           </Search>
           <Box sx={{ flexGrow: 1 }} />

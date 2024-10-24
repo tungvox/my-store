@@ -3,14 +3,15 @@ import { createTheme } from '@mui/material/styles';
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#232f3e', // Customize your primary color
+      main: '#232f3e', 
     },
     secondary: {
-      main: '#dc004e', // Customize your secondary color
+      main: '#dc004e', 
     },
-    // Add more color customizations as needed
+    background: {
+      paper: '#f6f6f6', 
+    },
   },
-  // You can customize other theme properties here
 });
 
 export default theme;

@@ -9,6 +9,7 @@ interface ProductState {
   filters: {
     category: string;
     sortBy: string;
+    searchTerm: string;
   };
 }
 
@@ -20,12 +21,15 @@ const initialState: ProductState = {
   filters: {
     category: '',
     sortBy: '',
+    searchTerm: '',
   },
 };
 
-export const fetchProducts = createAsyncThunk('products/fetchProducts', async () => {
+export const fetchProducts = createAsyncThunk<Product[]>('products/fetchProducts', async () => {
   const response = await fetch('https://fakestoreapi.com/products');
-  return response.json();
+  const data = await response.json();
+  // Transform the object with numeric keys into an array
+  return Object.values(data);
 });
 
 const productSlice = createSlice({
@@ -69,6 +73,12 @@ const applyFilters = (state: ProductState) => {
         return b.price - a.price;
       }
     });
+  }
+
+  if (state.filters.searchTerm) {
+    filtered = filtered.filter(item =>
+      item.title.toLowerCase().includes(state.filters.searchTerm.toLowerCase())
+    );
   }
 
   state.filteredItems = filtered;
