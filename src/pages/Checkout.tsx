@@ -50,7 +50,7 @@ const Checkout: React.FC = () => {
                 <IconButton onClick={() => handleDecrement(productId)} size="small">
                   <RemoveIcon />
                 </IconButton>
-                <Typography variant="body2" sx={{ mx: 2 }}>
+                <Typography variant="body2" sx={{ mx: 2, color: 'blue' }}>
                   Quantity: {quantities[productId]}
                 </Typography>
                 <IconButton onClick={() => handleIncrement(productId)} size="small">
