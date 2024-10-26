@@ -12,7 +12,6 @@ const Checkout: React.FC = () => {
   const cartItems = useSelector((state: RootState) => state.cart.items);
   const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
-  // Calculate quantities
   const quantities = cartItems.reduce((acc, item) => {
     acc[item.id] = (acc[item.id] || 0) + item.quantity;
     return acc;
@@ -29,15 +28,13 @@ const Checkout: React.FC = () => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // Handle form submission (e.g., send order to backend)
+    //Submit logic
     console.log('Order submitted');
   };
 
   return (
     <Box sx={{ width: '100%', maxWidth: 1200, mx: 'auto', p: 2 }}>
       <Typography variant="h4" gutterBottom>Checkout</Typography>
-      
-      {/* Cart Summary */}
       <Typography variant="h6" gutterBottom>Order Summary</Typography>
       <Grid container spacing={2} sx={{ mb: 4 }}>
         {Object.keys(quantities).map((productId) => {
@@ -63,7 +60,6 @@ const Checkout: React.FC = () => {
       </Grid>
       <Typography variant="h6" gutterBottom>Total: ${total.toFixed(2)}</Typography>
 
-      {/* Existing form */}
       <form onSubmit={handleSubmit}>
         <TextField label="Full Name" fullWidth margin="normal" required />
         <TextField label="Email" type="email" fullWidth margin="normal" required />

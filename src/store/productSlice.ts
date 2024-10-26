@@ -28,7 +28,6 @@ const initialState: ProductState = {
 export const fetchProducts = createAsyncThunk<Product[]>('products/fetchProducts', async () => {
   const response = await fetch('https://fakestoreapi.com/products');
   const data = await response.json();
-  // Transform the object with numeric keys into an array
   return Object.values(data);
 });
 
