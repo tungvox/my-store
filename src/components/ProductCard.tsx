@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Card, CardContent, CardMedia, Typography, Button, Box, styled, Rating } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Product } from '../types/types';
 import { addToCart, removeFromCart } from '../store/cartSlice';
 
@@ -23,49 +23,63 @@ const StyledCard = styled(Card)(({ theme }) => ({
 const StyledCardMedia = styled(CardMedia)<{ component?: React.ElementType }>({
   height: 200,
   objectFit: 'contain',
-});
-
-const StyledLink = styled(Link)({
-  textDecoration: 'none',
-  color: 'inherit',
-  '&:hover': {
-    textDecoration: 'underline',
-  },
+  backgroundColor: 'white',
+  padding: 10
 });
 
 const ProductCard: React.FC<ProductCardProps> = ({ product, isCheckout = false }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const handleAddToCart = () => {
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.stopPropagation();
     dispatch(addToCart(product));
   };
 
-  const handleRemoveFromCart = () => {
+  const handleRemoveFromCart = (e: React.MouseEvent) => {
+    e.stopPropagation();
     dispatch(removeFromCart(product.id));
   };
 
+  const handleCardClick = () => {
+    navigate(`/product/${product.id}`);
+  };
+
   return (
-    <StyledCard>
+    <StyledCard onClick={handleCardClick} sx={{ cursor: 'pointer' }}>
       <StyledCardMedia
         component="img"
-        image={product.image}
+        image={product.thumbnail}
         title={product.title}
       />
       <CardContent sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', backgroundColor: (theme) => theme.palette.background.paper }}>
         <Typography gutterBottom variant="h6" component="div">
-          <StyledLink to={`/product/${product.id}`}>
-            {product.title}
-          </StyledLink>
+          {product.title}
         </Typography>
         <Box sx={{ display: 'flex', alignItems: 'center', mb: 1, fontSize: '0.875rem' }}>
-          <Rating value={product.rating.rate} precision={0.1} readOnly size="small" />
+          <Rating value={product.rating} precision={0.1} readOnly size="small" />
           <Typography variant="body2" color="text.secondary" sx={{ ml: 0.5 }}>
-            ({product.rating.count})
+            ({product.reviews.length})
           </Typography>
         </Box>
-        <Typography variant="h6" color="primary" sx={{ fontWeight: 'bold', mb: 1 }}>
-          ${product.price.toFixed(2)}
+        <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
+          {product.brand}
         </Typography>
+        <Box sx={{ display: 'flex', alignItems: 'baseline', mb: 1 }}>
+          <Typography variant="h6" color="primary" sx={{ fontWeight: 'bold', mr: 1 }}>
+            ${(product.price * (1 - product.discountPercentage / 100)).toFixed(2)}
+          </Typography>
+          {product.discountPercentage > 0 && (
+            <Typography variant="body2" color="text.secondary" sx={{ textDecoration: 'line-through' }}>
+              ${product.price.toFixed(2)}
+            </Typography>
+          )}
+        </Box>
+        {product.stock <= 5 && (
+          <Typography variant="body2" color="error" sx={{ mb: 1 }}>
+            Only {product.stock} left in stock!
+          </Typography>
+        )}
         <Box sx={{ mt: 'auto' }}>
           {isCheckout ? (
             <Button
@@ -81,6 +95,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, isCheckout = false }
               variant="contained"
               onClick={handleAddToCart}
               fullWidth
+              disabled={product.stock === 0}
               sx={{
                 mt: 2,
                 backgroundColor: (theme) => theme.palette.primary.main,
@@ -89,7 +104,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, isCheckout = false }
                 },
               }}
             >
-              Add to Cart
+              {product.stock === 0 ? 'Out of Stock' : 'Add to Cart'}
             </Button>
           )}
         </Box>
