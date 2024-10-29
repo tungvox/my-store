@@ -22,17 +22,6 @@ const CategoryList: React.FC<CategoryListProps> = ({
 }) => {
   return (
     <Box>
-      <Typography
-        variant="h4"
-        sx={{
-          mb: 4,
-          fontWeight: 600,
-          textAlign: "center",
-        }}
-      >
-        Browse Categories
-      </Typography>
-
       <Grid
         container
         spacing={3}
