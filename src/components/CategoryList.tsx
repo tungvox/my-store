@@ -1,6 +1,6 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
-import Grid from "@mui/material/Grid2"; // Grid version 2
+import { Box, } from "@mui/material";
+import Grid from "@mui/material/Grid2"; 
 import { Product } from "../types/types";
 import CategoryCard from "./CategoryCard";
 
@@ -12,7 +12,7 @@ interface Category {
 
 interface CategoryListProps {
   products: Product[];
-  categories: Category[]; // Ensure this is an array of Category
+  categories: Category[]; 
   productsByCategory: Record<string, Product[]>;
 }
 

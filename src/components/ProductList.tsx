@@ -1,6 +1,6 @@
 import React from 'react';
 import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid2'; // Grid version 2
+import Grid from '@mui/material/Grid2'; 
 import { Product } from '../types/types';
 import ProductCard from './ProductCard';
 

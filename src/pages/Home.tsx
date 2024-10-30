@@ -55,7 +55,6 @@ const Home: React.FC = () => {
     );
   }
 
-  // Build productsByCategory based on the categories array
   const productsByCategory: Record<string, Product[]> = categories.reduce((acc, category) => {
     acc[category.slug] = products.filter(product => product.category === category.slug);
     return acc;
@@ -67,7 +66,7 @@ const Home: React.FC = () => {
         <Grid size={{ xs: 12 }}>
           <CategoryList 
             products={products}
-            categories={categories} // Pass categories directly as an array of Category
+            categories={categories} 
             productsByCategory={productsByCategory}
           />
         </Grid>

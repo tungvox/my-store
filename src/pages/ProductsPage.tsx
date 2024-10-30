@@ -13,7 +13,7 @@ const ProductsPage: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   
   const { 
-    products,  // Changed from items: products
+    products,  
     filters,
     status,
     error 
@@ -24,7 +24,6 @@ const ProductsPage: React.FC = () => {
       dispatch(setFilter({ category }));
     }
     return () => {
-      // Clear category filter when unmounting
       dispatch(setFilter({ category: '' }));
     };
   }, [category, dispatch]);
@@ -32,24 +31,17 @@ const ProductsPage: React.FC = () => {
   const filteredProducts = useMemo(() => {
     return products
       .filter((product: Product) => {
-        // Category filter
         const matchesCategory = !filters.category || product.category === filters.category;
         
-        // Search filter
         const searchLower = filters.searchTerm?.toLowerCase() || '';
         const matchesSearch = !filters.searchTerm || 
           product.title.toLowerCase().includes(searchLower) ||
           product.description.toLowerCase().includes(searchLower) ||
           product.brand.toLowerCase().includes(searchLower);
 
-        // Brand filter
         const matchesBrand = !filters.brand || product.brand === filters.brand;
-
-        // Price filter
         const matchesMinPrice = !filters.minPrice || product.price >= filters.minPrice;
         const matchesMaxPrice = !filters.maxPrice || product.price <= filters.maxPrice;
-
-        // Stock filter
         const matchesStock = !filters.inStock || product.stock > 0;
 
         return matchesCategory && 
