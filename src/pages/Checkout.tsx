@@ -28,7 +28,6 @@ const Checkout: React.FC = () => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    //Submit logic
     console.log('Order submitted');
   };
 
