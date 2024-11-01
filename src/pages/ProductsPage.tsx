@@ -5,11 +5,11 @@ import { Typography, Box, Alert, CircularProgress } from '@mui/material';
 import { RootState, AppDispatch } from '../store/store';
 import Filters from '../components/Filters';
 import ProductList from '../components/ProductList';
-import { setFilter } from '../store/productSlice';
+import { setFilter, fetchProducts } from '../store/productSlice';
 import { Product } from '../types/types';
 
 const ProductsPage: React.FC = () => {
-  const { category } = useParams<{ category: string }>();
+  const { category } = useParams<{ category?: string }>();
   const dispatch = useDispatch<AppDispatch>();
   
   const { 
@@ -22,10 +22,10 @@ const ProductsPage: React.FC = () => {
   useEffect(() => {
     if (category) {
       dispatch(setFilter({ category }));
-    }
-    return () => {
+    } else {
       dispatch(setFilter({ category: '' }));
-    };
+    }
+    dispatch(fetchProducts());
   }, [category, dispatch]);
 
   const filteredProducts = useMemo(() => {

@@ -112,7 +112,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ category, products }) => {
                       fontWeight: 'bold',
                     }}
                   >
-                    -{product.discountPercentage.toFixed(0)}%
+                    -{Number(product.discountPercentage.toFixed(2)) < 1 ? product.discountPercentage.toFixed(2) : product.discountPercentage.toFixed(0)}%
                   </Box>
                 )}
               </Box>
