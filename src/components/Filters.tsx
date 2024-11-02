@@ -83,7 +83,6 @@ const Filters: React.FC = () => {
     dispatch(setFilter({ inStock: event.target.checked }));
   }, [dispatch]);
 
-  // Early return if no products
   if (products.length === 0) {
     return (
       <Box sx={{ padding: 2 }}>
