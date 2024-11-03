@@ -94,7 +94,6 @@ const ProductDetails: React.FC = () => {
           />
         </Box>
 
-        {/* Details Section */}
         <Box sx={{
           display: 'flex',
           flexDirection: 'column',
