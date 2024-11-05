@@ -10,6 +10,7 @@ import {
 } from '@mui/material';
 import Grid from '@mui/material/Grid2'; // Grid version 2
 import { Product } from '../types/types';
+import theme from '../theme';
 
 interface Category {
   slug: string;
@@ -37,7 +38,7 @@ const StyledCategoryCard = styled(Card)(({ theme }) => ({
 const StyledProductImage = styled(CardMedia)<{ component: string }>(({ theme }) => ({
   height: 140,
   objectFit: 'contain',
-  backgroundColor: theme.palette.grey[50],
+  backgroundColor: 'white',
   padding: theme.spacing(1),
   transition: 'transform 0.2s ease-in-out',
   '&:hover': {
@@ -84,12 +85,8 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ category, products }) => {
             <Grid size={{xs:6}} key={product.id}>
               <Box 
                 sx={{
-                  border: 1,
-                  borderColor: 'divider',
-                  borderRadius: 1,
                   overflow: 'hidden',
                   position: 'relative',
-                  bgcolor: 'background.paper',
                 }}
               >
                 <StyledProductImage
@@ -103,7 +100,6 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ category, products }) => {
                       position: 'absolute',
                       top: 8,
                       right: 8,
-                      bgcolor: 'error.main',
                       color: 'white',
                       px: 1,
                       py: 0.5,
@@ -124,7 +120,8 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ category, products }) => {
                   textOverflow: 'ellipsis',
                   overflow: 'hidden',
                   whiteSpace: 'nowrap',
-                  color: 'text.secondary',
+                  color: theme.palette.text.secondary,
+                  fontWeight: 'bold',
                   fontSize: '0.75rem',
                 }}
               >
