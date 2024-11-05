@@ -12,13 +12,13 @@ import Menu from '@mui/material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../store/store'; 
 import theme from '../theme';
 import { setFilter } from '../store/productSlice';
 
-const Search = styled('div')(({ theme }) => ({
+const Search = styled('form')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
   backgroundColor: alpha(theme.palette.common.white, 0.15),
@@ -96,8 +96,19 @@ export default function Navbar() {
 
   const dispatch = useDispatch();
 
+  const navigate = useNavigate();
+  const [searchTerm, setSearchTerm] = React.useState('');
+
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value);
     dispatch(setFilter({ searchTerm: event.target.value }));
+  };
+
+  const handleSearchSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    if (searchTerm.trim()) {
+      navigate(`/products?search=${encodeURIComponent(searchTerm.trim())}`);
+    }
   };
 
   return (
@@ -113,7 +124,7 @@ export default function Navbar() {
           >
             My Store
           </Typography>
-          <Search>
+          <Search onSubmit={handleSearchSubmit}>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
@@ -121,6 +132,7 @@ export default function Navbar() {
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
               onChange={handleSearchChange}
+              value={searchTerm}
             />
           </Search>
           <Box sx={{ flexGrow: 1 }} />

@@ -37,9 +37,11 @@ const ProductsPage: React.FC = () => {
         const matchesSearch = !filters.searchTerm || 
           product.title.toLowerCase().includes(searchLower) ||
           product.description.toLowerCase().includes(searchLower) ||
-          product.brand.toLowerCase().includes(searchLower);
+          (product.brand ? product.brand.toLowerCase().includes(searchLower) : false);
 
-        const matchesBrand = !filters.brand || product.brand === filters.brand;
+        const matchesBrand = !filters.brand || 
+          (product.brand ? product.brand === filters.brand : false);
+        
         const matchesMinPrice = !filters.minPrice || product.price >= filters.minPrice;
         const matchesMaxPrice = !filters.maxPrice || product.price <= filters.maxPrice;
         const matchesStock = !filters.inStock || product.stock > 0;

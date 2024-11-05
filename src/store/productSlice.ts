@@ -43,6 +43,7 @@ const initialState: ProductState = {
 export const fetchProducts = createAsyncThunk<Product[]>('products/fetchProducts', async () => {
   const response = await fetch('https://dummyjson.com/products');
   const data = await response.json();
+  console.log('API Response:', data.products);
   return data.products; 
 });
 
@@ -92,14 +93,17 @@ const productSlice = createSlice({
 const applyFilters = (state: ProductState) => {
   let filtered = state.products;
 
-  // Filter by category slug
   if (state.filters.category) {
     filtered = filtered.filter(item => item.category === state.filters.category);
   }
 
-  // Filter by brand
   if (state.filters.brand) {
-    filtered = filtered.filter(item => item.brand === state.filters.brand);
+    filtered = filtered.filter(item => {
+      console.log('Product:', item);
+      console.log('Brand:', item.brand);
+      
+      return item.brand && item.brand.toLowerCase() === state.filters.brand!.toLowerCase();
+    });
   }
 
   // Filter by in-stock status
