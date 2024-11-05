@@ -6,6 +6,7 @@ import axios from 'axios';
 import { Product } from '../types/types';
 import { addToCart } from '../store/cartSlice';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import theme from '../theme';
 
 const ProductDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -137,10 +138,7 @@ const ProductDetails: React.FC = () => {
               mt: 4,
               py: 1.5,
               width: '200px',
-              bgcolor: '#2c3e50',
-              '&:hover': {
-                bgcolor: '#34495e'
-              }
+              bgcolor: theme.palette.secondary.main,
             }}
           >
             Add to Cart

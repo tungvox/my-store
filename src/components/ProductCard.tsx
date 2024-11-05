@@ -15,6 +15,8 @@ const StyledCard = styled(Card)(({ theme }) => ({
   flexDirection: 'column',
   height: '100%',
   transition: 'box-shadow 0.3s ease-in-out',
+  boxShadow: 'none',
+  borderRadius: 0,
   '&:hover': {
     boxShadow: theme.shadows[4],
   },
@@ -105,10 +107,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             disabled={product.stock === 0}
             sx={{
               mt: 2,
-              backgroundColor: (theme) => theme.palette.primary.main,
-              '&:hover': {
-                backgroundColor: (theme) => theme.palette.primary.dark,
-              },
+              color: 'white',
+              backgroundColor: (theme) => theme.palette.secondary.main,
+              boxShadow: 'none',
+              borderRadius: 0,
             }}
           >
             {product.stock === 0 ? 'Out of Stock' : 'Add to Cart'}

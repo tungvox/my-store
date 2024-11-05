@@ -8,6 +8,7 @@ import { RootState } from '../store/store';
 import { addToCart, removeFromCart } from '../store/cartSlice';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
+import theme from '../theme';
 
 const Checkout: React.FC = () => {
   const dispatch = useDispatch();
@@ -73,7 +74,7 @@ const Checkout: React.FC = () => {
 
       <Grid container spacing={3}>
         <Grid size={{ xs: 12, md: 8 }}>
-          <Box sx={{ p: 2 }}>
+          <Box sx={{ p: 2, backgroundColor: theme.palette.background.paper, borderRadius: 2, boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
             <Box sx={{ 
               display: 'flex', 
               justifyContent: 'space-between',
@@ -197,7 +198,7 @@ const Checkout: React.FC = () => {
                         display: 'flex', 
                         gap: 1,
                         '& button': {
-                          color: '#0066c0',
+                          color: theme.palette.text.primary,
                           fontSize: '12px',
                           textTransform: 'none',
                           p: 0,
@@ -234,7 +235,7 @@ const Checkout: React.FC = () => {
 
         <Grid size={{ xs: 12, md: 4 }}>
           <Box sx={{ 
-            backgroundColor: (theme) => theme.palette.background.paper,
+            backgroundColor: 'white',
             p: 3,
             borderRadius: 2,
             boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
