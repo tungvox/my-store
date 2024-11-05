@@ -42,11 +42,12 @@ const Filters: React.FC = () => {
 
   // Get unique brands from products with memoization
   const brands: BrandOption[] = React.useMemo(() => {
-    const uniqueBrands = Array.from(new Set(products.map((product: Product) => product.brand)));
+    const uniqueBrands = Array.from(new Set(products.map((product: Product) => product.brand)))
+      .filter((brand): brand is string => brand !== undefined && brand !== null);
     return uniqueBrands.map((brand, index) => ({
       label: brand,
       value: brand,
-      key: `brand-${index}`,  // Add unique key here
+      key: `brand-${index}`,
     }));
   }, [products]);
 
