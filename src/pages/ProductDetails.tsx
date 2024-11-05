@@ -43,7 +43,6 @@ const ProductDetails: React.FC = () => {
       minHeight: '100vh',
       bgcolor: '#ffffff'
     }}>
-      {/* Back Link */}
       <Box sx={{ maxWidth: '1200px', mx: 'auto', mb: 3 }}>
         <Link
           component="button"

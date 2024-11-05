@@ -1,9 +1,10 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Card, CardContent, CardMedia, Typography, Button, Box, styled, Rating } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { Product } from '../types/types';
 import { addToCart, removeFromCart } from '../store/cartSlice';
+import { RootState } from '../store/store';
 
 interface ProductCardProps {
   product: Product;
@@ -31,6 +32,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, isCheckout = false }
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const cartQuantity = useSelector((state: RootState) => 
+    state.cart.items.find(item => item.id === product.id)?.quantity || 0
+  );
+
   const handleAddToCart = (e: React.MouseEvent) => {
     e.stopPropagation();
     dispatch(addToCart(product));
@@ -38,7 +43,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, isCheckout = false }
 
   const handleRemoveFromCart = (e: React.MouseEvent) => {
     e.stopPropagation();
-    dispatch(removeFromCart(product.id));
+    dispatch(removeFromCart({ id: product.id, removeAll: true }));
   };
 
   const handleCardClick = () => {
@@ -81,32 +86,34 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, isCheckout = false }
           </Typography>
         )}
         <Box sx={{ mt: 'auto' }}>
-          {isCheckout ? (
-            <Button
-              variant="outlined"
-              onClick={handleRemoveFromCart}
-              fullWidth
-              sx={{ mt: 2 }}
-            >
-              Remove from Cart
-            </Button>
-          ) : (
-            <Button
-              variant="contained"
-              onClick={handleAddToCart}
-              fullWidth
-              disabled={product.stock === 0}
-              sx={{
-                mt: 2,
-                backgroundColor: (theme) => theme.palette.primary.main,
-                '&:hover': {
-                  backgroundColor: (theme) => theme.palette.primary.dark,
-                },
-              }}
-            >
-              {product.stock === 0 ? 'Out of Stock' : 'Add to Cart'}
-            </Button>
+          {cartQuantity > 0 && (
+            <Typography variant="body2" align="left" sx={{ mb: 1 }}>
+              {cartQuantity} in cart - <span 
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleRemoveFromCart(e);
+                }}
+                style={{ color: 'primary.main', cursor: 'pointer', textDecoration: 'underline' }}
+              >
+                Remove
+              </span>
+            </Typography>
           )}
+          <Button
+            variant="contained"
+            onClick={handleAddToCart}
+            fullWidth
+            disabled={product.stock === 0}
+            sx={{
+              mt: 2,
+              backgroundColor: (theme) => theme.palette.primary.main,
+              '&:hover': {
+                backgroundColor: (theme) => theme.palette.primary.dark,
+              },
+            }}
+          >
+            {product.stock === 0 ? 'Out of Stock' : 'Add to Cart'}
+          </Button>
         </Box>
       </CardContent>
     </StyledCard>

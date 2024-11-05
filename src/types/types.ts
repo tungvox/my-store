@@ -51,6 +51,8 @@ export interface ProductMeta {
 
 export interface CartItem extends Product {
   quantity: number;
+  name: string;
+  image: string;
 }
 
 export interface FilterState {

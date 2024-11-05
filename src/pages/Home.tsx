@@ -61,7 +61,7 @@ const Home: React.FC = () => {
   }, {} as Record<string, Product[]>);
 
   return (
-    <Container maxWidth="lg" sx={{ mt: 4, mb: 8 }}>
+    <Container maxWidth="xl" sx={{ mt: 4, mb: 8 }}>
       <Grid container spacing={3}>
         <Grid size={{ xs: 12 }}>
           <CategoryList 

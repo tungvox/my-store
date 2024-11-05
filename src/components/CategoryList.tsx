@@ -21,23 +21,26 @@ const CategoryList: React.FC<CategoryListProps> = ({
   productsByCategory,
 }) => {
   return (
-    <Box>
+    <Box sx={{ py: 4, maxWidth: '1400px', mx: 'auto' }}>
       <Grid
         container
-        spacing={3}
+        spacing={{ xs: 2, md: 3 }}
         sx={{
           px: { xs: 2, md: 4 },
           mb: 6,
+          justifyContent: 'center',
         }}
       >
         {categories
-          .filter((category) => productsByCategory[category.slug]?.length > 0) 
+          .filter((category) => productsByCategory[category.slug]?.length > 0)
           .map((category) => (
-            <Grid size={{xs: 12, sm: 6, md: 4, lg: 3}} key={category.slug}>
-              <CategoryCard
-                category={category}
-                products={productsByCategory[category.slug]}
-              />
+            <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }} key={category.slug}>
+              <Box sx={{ height: '100%', p: 1 }}>
+                <CategoryCard
+                  category={category}
+                  products={productsByCategory[category.slug]}
+                />
+              </Box>
             </Grid>
           ))}
       </Grid>
