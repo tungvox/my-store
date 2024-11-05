@@ -10,14 +10,14 @@ const Cart: React.FC = () => {
   const cartItems = useSelector((state: RootState) => state.cart.items);
 
   const handleRemoveItem = (id: number) => {
-    dispatch(removeFromCart(id));
+    dispatch(removeFromCart({ id, removeAll: true }));
   };
 
   const handleUpdateQuantity = (id: number, quantity: number) => {
     if (quantity > 0) {
       dispatch(updateQuantity({ id, quantity }));
     } else {
-      dispatch(removeFromCart(id));
+      dispatch(removeFromCart({ id, removeAll: true }));
     }
   };
 

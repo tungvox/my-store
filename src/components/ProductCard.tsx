@@ -8,7 +8,6 @@ import { RootState } from '../store/store';
 
 interface ProductCardProps {
   product: Product;
-  isCheckout?: boolean;
 }
 
 const StyledCard = styled(Card)(({ theme }) => ({
@@ -28,7 +27,7 @@ const StyledCardMedia = styled(CardMedia)<{ component?: React.ElementType }>({
   padding: 10
 });
 
-const ProductCard: React.FC<ProductCardProps> = ({ product, isCheckout = false }) => {
+const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
