@@ -40,7 +40,6 @@ const Filters: React.FC = () => {
   const { categories, products } = useSelector((state: RootState) => state.products);
   const filters = useSelector((state: RootState) => state.products.filters);
 
-  // Get unique brands from products with memoization
   const brands: BrandOption[] = React.useMemo(() => {
     const uniqueBrands = Array.from(new Set(products.map((product: Product) => product.brand)))
       .filter((brand): brand is string => brand !== undefined && brand !== null);
