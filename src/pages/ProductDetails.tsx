@@ -74,7 +74,6 @@ const ProductDetails: React.FC = () => {
         gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' },
         gap: 4,
       }}>
-        {/* Image Section */}
         <Box sx={{
           display: 'flex',
           justifyContent: 'center',

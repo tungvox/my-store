@@ -106,12 +106,10 @@ const applyFilters = (state: ProductState) => {
     });
   }
 
-  // Filter by in-stock status
   if (state.filters.inStock) {
     filtered = filtered.filter(item => item.stock > 0);
   }
 
-  // Sort the filtered items
   if (state.filters.sortBy) {
     filtered.sort((a, b) => {
       switch (state.filters.sortBy) {
@@ -129,14 +127,12 @@ const applyFilters = (state: ProductState) => {
     });
   }
 
-  // Filter by search term
   if (state.filters.searchTerm) {
     filtered = filtered.filter(item =>
       item.title.toLowerCase().includes(state.filters.searchTerm.toLowerCase())
     );
   }
 
-  // Update the filtered items in the state
   state.filteredItems = filtered;
 };
 
