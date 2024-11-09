@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { Product } from '../types/types';
 
-// Add the Category interface here
 interface Category {
   slug: string;
   name: string;
@@ -10,7 +9,7 @@ interface Category {
 
 interface ProductState {
   products: Product[];
-  categories: Category[]; // Ensure this is an array of Category
+  categories: Category[]; 
   filters: {
     category: string;
     sortBy: string;

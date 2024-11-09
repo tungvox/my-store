@@ -53,7 +53,6 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ category, products }) => {
     navigate(`/products/${category.slug}`);
   };
 
-  // Get first 4 products of the category to display as preview
   const previewProducts = products.slice(0, 4);
 
   return (
