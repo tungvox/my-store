@@ -10,7 +10,7 @@ import { Product } from '../types/types';
 
 const FilterSummaryBar = ({ count, filters }: { count: number, filters: any }) => {
   const activeFilters = Object.entries(filters).filter(([key, value]) => {
-    if (key === 'sortBy') return false; // Don't show sort in summary
+    if (key === 'sortBy') return false; 
     return value && value !== '';
   });
 

@@ -90,7 +90,6 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     );
   };
 
-  // Add automatic image rotation on hover
   useEffect(() => {
     let intervalId: ReturnType<typeof setInterval>;
     
@@ -99,7 +98,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         setCurrentImageIndex((prev) => 
           prev === product.images.length - 1 ? 0 : prev + 1
         );
-      }, 1500); // Change image every 1.5 seconds
+      }, 1500); 
     }
 
     return () => {
@@ -116,7 +115,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => {
         setIsHovered(false);
-        setCurrentImageIndex(0); // Reset to first image when mouse leaves
+        setCurrentImageIndex(0); 
       }}
     >
       <ImageContainer>
@@ -153,7 +152,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           image={product.images[currentImageIndex]}
           title={product.title}
         />
-        {/* Image indicators */}
+        
         {product.images.length > 1 && (
           <Box
             sx={{

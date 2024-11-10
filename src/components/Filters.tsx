@@ -93,19 +93,17 @@ const Filters: React.FC = () => {
   const subcategories: SubcategoryOption[] = React.useMemo(() => {
     if (!filters.category) return [];
     
-    // Get all products in the selected category
     const categoryProducts = products.filter(product => 
       product.category.toLowerCase() === filters.category.toLowerCase()
     );
     
-    // Get unique tags from all products in the category
     const uniqueSubcategories = Array.from(new Set(
       categoryProducts.flatMap(product => product.tags)
         .filter(tag => tag && tag.toLowerCase() !== filters.category.toLowerCase())
     ));
 
     return uniqueSubcategories
-      .filter(Boolean) // Remove any null/undefined values
+      .filter(Boolean) 
       .map(tag => ({
         label: tag,
         value: tag,
