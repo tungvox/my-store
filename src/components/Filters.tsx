@@ -28,6 +28,11 @@ interface BrandOption {
   key: string
 }
 
+interface SubcategoryOption {
+  label: string;
+  value: string;
+}
+
 const sortOptions: SortOption[] = [
   { label: 'Price: Low to High', value: 'asc' },
   { label: 'Price: High to Low', value: 'desc' },
@@ -52,7 +57,7 @@ const Filters: React.FC = () => {
 
   const categoryOptions: FilterOption[] = React.useMemo(() => 
     categories.map((cat) => ({
-      label: cat.name,
+      label: cat.slug.charAt(0).toUpperCase() + cat.slug.slice(1),
       value: cat.slug,
     })),
     [categories]
@@ -62,6 +67,8 @@ const Filters: React.FC = () => {
     _event: React.SyntheticEvent,
     newValue: FilterOption | null
   ) => {
+    console.log('Selected category:', newValue);
+    console.log('Setting filter value:', newValue?.value || '');
     dispatch(setFilter({ category: newValue?.value || '' }));
   }, [dispatch]);
 
@@ -81,6 +88,36 @@ const Filters: React.FC = () => {
 
   const handleInStockChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(setFilter({ inStock: event.target.checked }));
+  }, [dispatch]);
+
+  const subcategories: SubcategoryOption[] = React.useMemo(() => {
+    if (!filters.category) return [];
+    
+    // Get all products in the selected category
+    const categoryProducts = products.filter(product => 
+      product.category.toLowerCase() === filters.category.toLowerCase()
+    );
+    
+    // Get unique tags from all products in the category
+    const uniqueSubcategories = Array.from(new Set(
+      categoryProducts.flatMap(product => product.tags)
+        .filter(tag => tag && tag.toLowerCase() !== filters.category.toLowerCase())
+    ));
+
+    return uniqueSubcategories
+      .filter(Boolean) // Remove any null/undefined values
+      .map(tag => ({
+        label: tag,
+        value: tag,
+      }));
+  }, [products, filters.category]);
+
+  const handleSubcategoryChange = useCallback((
+    _event: React.SyntheticEvent,
+    newValue: SubcategoryOption | null
+  ) => {
+    console.log('Selected subcategory:', newValue);
+    dispatch(setFilter({ subcategory: newValue?.value || '' }));
   }, [dispatch]);
 
   if (products.length === 0) {
@@ -107,6 +144,22 @@ const Filters: React.FC = () => {
         )}
       />
       
+      {filters.category && (
+        <Autocomplete
+          key='subcategory-autocomplete'
+          options={subcategories}
+          getOptionLabel={(option) => option.label || ''}
+          value={subcategories.find(sub => sub.value === filters.subcategory) || null}
+          onChange={handleSubcategoryChange}
+          renderInput={(params) => <TextField {...params} label="Subcategory" />}
+          renderOption={(props, option) => (
+            <Box component="li" {...props} key={option.value}>
+              {option.label}
+            </Box>
+          )}
+        />
+      )}
+
       <Autocomplete
         key='brand-autocomplete'
         options={brands}

@@ -8,6 +8,47 @@ import ProductList from '../components/ProductList';
 import { setFilter, fetchProducts } from '../store/productSlice';
 import { Product } from '../types/types';
 
+const FilterSummaryBar = ({ count, filters }: { count: number, filters: any }) => {
+  const activeFilters = Object.entries(filters).filter(([key, value]) => {
+    if (key === 'sortBy') return false; // Don't show sort in summary
+    return value && value !== '';
+  });
+
+  return (
+    <Box
+      sx={{
+        backgroundColor: 'grey.100',
+        py: 1.5,
+        px: 2,
+        borderRadius: 1,
+        display: 'flex',
+        alignItems: 'center',
+        gap: 1
+      }}
+    >
+      <Typography variant="body1" color="text.secondary">
+        {activeFilters.length > 0 ? (
+          <>
+            {count} {count === 1 ? 'item was' : 'items were'} found with{' '}
+            {activeFilters.map(([key, value], index) => (
+              <span key={key}>
+                {index > 0 && ', '}
+                {key === 'searchTerm' ? `search "${value}"` : 
+                 key === 'inStock' ? 'in-stock filter' :
+                 key === 'category' ? `category "${value}"` :
+                 key === 'brand' ? `brand "${value}"` :
+                 `${key} "${value}"`}
+              </span>
+            ))}
+          </>
+        ) : (
+          <>{count} items</>
+        )}
+      </Typography>
+    </Box>
+  );
+};
+
 const ProductsPage: React.FC = () => {
   const { category } = useParams<{ category?: string }>();
   const dispatch = useDispatch<AppDispatch>();
@@ -113,25 +154,11 @@ const ProductsPage: React.FC = () => {
       </Box>
 
       <Box sx={{ flexGrow: 1 }}>
-        {filters.category && (
-          <Typography 
-            variant="h4" 
-            sx={{ 
-              mb: 3, 
-              textTransform: 'capitalize',
-              fontWeight: 'medium'
-            }}
-          >
-            {filters.category}
-            <Typography 
-              component="span" 
-              variant="h6" 
-              color="text.secondary" 
-              sx={{ ml: 2 }}
-            >
-              ({filteredProducts.length} products)
-            </Typography>
-          </Typography>
+        {filteredProducts.length > 0 && (
+          <FilterSummaryBar 
+            count={filteredProducts.length}
+            filters={filters}
+          />
         )}
 
         {filteredProducts.length === 0 ? (

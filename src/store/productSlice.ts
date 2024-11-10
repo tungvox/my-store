@@ -12,6 +12,7 @@ interface ProductState {
   categories: Category[]; 
   filters: {
     category: string;
+    subcategory: string;
     sortBy: string;
     searchTerm: string;
     brand?: string;
@@ -29,6 +30,7 @@ const initialState: ProductState = {
   categories: [],
   filters: {
     category: '',
+    subcategory: '',
     sortBy: '',
     searchTerm: '',
     brand: '',
@@ -39,12 +41,20 @@ const initialState: ProductState = {
   filteredItems: [],
 };
 
-export const fetchProducts = createAsyncThunk<Product[]>('products/fetchProducts', async () => {
-  const response = await fetch('https://dummyjson.com/products');
-  const data = await response.json();
-  console.log('API Response:', data.products);
-  return data.products; 
-});
+export const fetchProducts = createAsyncThunk<Product[]>(
+  'products/fetchProducts',
+  async () => {
+    const response = await fetch('https://dummyjson.com/products');
+    const data = await response.json();
+    console.log('Raw API Response:', data);
+    const products = data.products.map((product: any) => ({
+      ...product,
+      tags: product.tags || [],
+    }));
+    console.log('Processed products:', products);
+    return products;
+  }
+);
 
 export const fetchCategories = createAsyncThunk<Category[]>('products/fetchCategories', async () => {
   const response = await fetch('https://dummyjson.com/products/categories');
@@ -69,6 +79,8 @@ const productSlice = createSlice({
       .addCase(fetchProducts.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.products = action.payload;
+        console.log('Products loaded:', action.payload);
+        console.log('Sample product tags:', action.payload[0]?.tags);
         applyFilters(state);
       })
       .addCase(fetchProducts.rejected, (state, action) => {
@@ -91,9 +103,16 @@ const productSlice = createSlice({
 
 const applyFilters = (state: ProductState) => {
   let filtered = state.products;
+  console.log('Filters:', state.filters);
+  console.log('Products:', filtered);
 
   if (state.filters.category) {
     filtered = filtered.filter(item => item.category === state.filters.category);
+  }
+
+  if (state.filters.subcategory) {
+    filtered = filtered.filter(item => item.tags.includes(state.filters.subcategory)
+    );
   }
 
   if (state.filters.brand) {

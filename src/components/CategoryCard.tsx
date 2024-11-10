@@ -99,12 +99,18 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ category, products }) => {
                       position: 'absolute',
                       top: 8,
                       right: 8,
+                      backgroundColor: theme.palette.error.main,
                       color: 'white',
                       px: 1,
                       py: 0.5,
-                      borderRadius: 1,
+                      borderRadius: '12px',
                       fontSize: '0.75rem',
                       fontWeight: 'bold',
+                      boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      minWidth: '32px',
                     }}
                   >
                     -{Number(product.discountPercentage.toFixed(2)) < 1 ? product.discountPercentage.toFixed(2) : product.discountPercentage.toFixed(0)}%
