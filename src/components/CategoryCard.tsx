@@ -8,7 +8,7 @@ import {
   CardMedia,
   styled 
 } from '@mui/material';
-import Grid from '@mui/material/Grid2'; // Grid version 2
+import Grid from '@mui/material/Grid2'; 
 import { Product } from '../types/types';
 import theme from '../theme';
 

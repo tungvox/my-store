@@ -208,7 +208,6 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           {product.brand} | SKU: {product.sku}
         </Typography>
 
-        {/* Price section */}
         <Box sx={{ mb: 1 }}>
           <Box sx={{ 
             display: 'flex', 
