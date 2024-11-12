@@ -74,6 +74,9 @@ const ProductsPage: React.FC = () => {
       .filter((product: Product) => {
         const matchesCategory = !filters.category || product.category === filters.category;
         
+        const matchesSubcategory = !filters.subcategory || 
+          product.tags.includes(filters.subcategory);
+
         const searchLower = filters.searchTerm?.toLowerCase() || '';
         const matchesSearch = !filters.searchTerm || 
           product.title.toLowerCase().includes(searchLower) ||
@@ -88,6 +91,7 @@ const ProductsPage: React.FC = () => {
         const matchesStock = !filters.inStock || product.stock > 0;
 
         return matchesCategory && 
+               matchesSubcategory && 
                matchesSearch && 
                matchesBrand && 
                matchesMinPrice && 
