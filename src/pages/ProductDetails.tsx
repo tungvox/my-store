@@ -258,7 +258,6 @@ const ProductDetails: React.FC = () => {
                   const maxDimension = Math.max(width, height, depth);
                   const relativeWidth = (width / maxDimension) * 100;
                   const relativeHeight = (height / maxDimension) * 100;
-                  const relativeDepth = (depth / maxDimension) * 100;
 
                   return (
                     <Box sx={{
