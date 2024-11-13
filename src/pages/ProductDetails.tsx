@@ -185,9 +185,36 @@ const ProductDetails: React.FC = () => {
             ))}
           </Box>
 
-          <Box sx={{ display: 'grid', gap: 2 }}>
-            <Typography variant="h6" sx={{ color: '#2c3e50' }}>Product Details</Typography>
-            <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 2 }}>
+          <Box sx={{ 
+            display: 'grid', 
+            gap: 2,
+            bgcolor: '#f8f8f8',
+            p: 3,
+            borderRadius: 2,
+            boxShadow: '0 2px 4px rgba(0,0,0,0.05)'
+          }}>
+            <Typography variant="h6" sx={{ 
+              color: '#2c3e50',
+              borderBottom: '2px solid #e1e8ed',
+              pb: 1
+            }}>
+              Product Details
+            </Typography>
+            <Box sx={{ 
+              display: 'grid', 
+              gridTemplateColumns: 'repeat(2, 1fr)', 
+              gap: 3,
+              '& > *': {
+                bgcolor: '#ffffff',
+                p: 2,
+                borderRadius: 1,
+                transition: 'transform 0.2s ease',
+                '&:hover': {
+                  transform: 'translateY(-2px)',
+                  boxShadow: '0 4px 6px rgba(0,0,0,0.05)'
+                }
+              }
+            }}>
               <InfoItem label="Category" value={product.category} />
               <InfoItem label="Stock" value={product.stock} />
               <InfoItem label="Rating" value={`${product.rating}/5`} />
@@ -197,12 +224,191 @@ const ProductDetails: React.FC = () => {
             </Box>
           </Box>
 
-          <Box sx={{ display: 'grid', gap: 2 }}>
-            <Typography variant="h6" sx={{ color: '#2c3e50' }}>Dimensions</Typography>
-            <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 2 }}>
-              <InfoItem label="Width" value={`${product.dimensions.width} cm`} />
-              <InfoItem label="Height" value={`${product.dimensions.height} cm`} />
-              <InfoItem label="Depth" value={`${product.dimensions.depth} cm`} />
+          <Box sx={{ 
+            display: 'grid', 
+            gap: 2,
+            bgcolor: '#f8f8f8',
+            p: 3,
+            borderRadius: 2,
+            boxShadow: '0 2px 4px rgba(0,0,0,0.05)'
+          }}>
+            <Typography variant="h6" sx={{ 
+              color: '#2c3e50',
+              borderBottom: '2px solid #e1e8ed',
+              pb: 1
+            }}>
+              Dimensions
+            </Typography>
+            <Box sx={{
+              display: 'grid',
+              gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' },
+              gap: 4,
+              alignItems: 'center'
+            }}>
+              <Box sx={{
+                position: 'relative',
+                width: '240px',
+                height: '240px',
+                margin: 'auto',
+                perspective: '1000px',
+                mt: 4
+              }}>
+                {(() => {
+                  const { width, height, depth } = product.dimensions;
+                  const maxDimension = Math.max(width, height, depth);
+                  const relativeWidth = (width / maxDimension) * 100;
+                  const relativeHeight = (height / maxDimension) * 100;
+                  const relativeDepth = (depth / maxDimension) * 100;
+
+                  return (
+                    <Box sx={{
+                      position: 'relative',
+                      width: `${relativeWidth}%`,
+                      height: `${relativeHeight}%`,
+                      transformStyle: 'preserve-3d',
+                      transform: 'rotateX(60deg) rotateZ(-45deg)',
+                      transition: 'transform 0.3s ease',
+                      margin: 'auto',
+                      '&:hover': {
+                        transform: 'rotateX(65deg) rotateZ(-45deg)',
+                      }
+                    }}>
+                      <Box sx={{
+                        position: 'absolute',
+                        width: '100%',
+                        height: '100%',
+                        border: '2px solid #e1e8ed',
+                        background: 'linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%)',
+                        boxShadow: '0 0 20px rgba(0,0,0,0.05)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}>
+                        <Typography 
+                          sx={{ 
+                            transform: 'rotateX(-60deg) rotateZ(45deg)',
+                            color: '#2c3e50',
+                            fontSize: '0.9rem',
+                            fontWeight: 500
+                          }}
+                        >
+                          {`${width} × ${height}`}
+                        </Typography>
+                      </Box>
+                      <Box sx={{
+                        position: 'absolute',
+                        width: `${(depth / width) * 100}%`,
+                        height: '100%',
+                        right: `-${(depth / width) * 100}%`,
+                        transformOrigin: 'left',
+                        transform: 'rotateY(90deg)',
+                        border: '2px solid #e1e8ed',
+                        background: 'linear-gradient(135deg, #f8f9fa 0%, #f1f3f5 100%)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}>
+                        <Typography 
+                          sx={{ 
+                            transform: 'rotateX(-60deg) rotateZ(45deg)',
+                            color: '#2c3e50',
+                            fontSize: '0.9rem',
+                            fontWeight: 500
+                          }}
+                        >
+                          {`${depth}`}
+                        </Typography>
+                      </Box>
+                      <Box sx={{
+                        position: 'absolute',
+                        width: '100%',
+                        height: `${(depth / height) * 100}%`,
+                        top: `-${(depth / height) * 100}%`,
+                        transformOrigin: 'bottom',
+                        transform: 'rotateX(90deg)',
+                        border: '2px solid #e1e8ed',
+                        background: 'linear-gradient(135deg, #f1f3f5 0%, #e9ecef 100%)',
+                      }} />
+                    </Box>
+                  );
+                })()}
+
+                <Box sx={{
+                  position: 'absolute',
+                  top: '50%',
+                  left: '-40px',
+                  transform: 'rotate(-45deg)',
+                  color: '#6c757d',
+                  fontSize: '0.85rem',
+                  fontWeight: 500,
+                }}>
+                  Height
+                </Box>
+                <Box sx={{
+                  position: 'absolute',
+                  bottom: '-40px',
+                  left: '50%',
+                  transform: 'translateX(-50%) rotate(-45deg)',
+                  color: '#6c757d',
+                  fontSize: '0.85rem',
+                  fontWeight: 500,
+                }}>
+                  Width
+                </Box>
+                <Box sx={{
+                  position: 'absolute',
+                  top: '50%',
+                  right: '-50px',
+                  transform: 'rotate(45deg)',
+                  color: '#6c757d',
+                  fontSize: '0.85rem',
+                  fontWeight: 500,
+                }}>
+                  Depth
+                </Box>
+                <Box sx={{
+                  position: 'absolute',
+                  top: '0',
+                  left: '-20px',
+                  height: '100%',
+                  borderLeft: '2px dashed #e1e8ed',
+                }} />
+                <Box sx={{
+                  position: 'absolute',
+                  bottom: '-20px',
+                  left: '0',
+                  width: '100%',
+                  borderBottom: '2px dashed #e1e8ed',
+                }} />
+                <Box sx={{
+                  position: 'absolute',
+                  top: '0',
+                  right: '-20px',
+                  height: '100%',
+                  borderRight: '2px dashed #e1e8ed',
+                }} />
+              </Box>
+
+              <Box sx={{ 
+                display: 'grid', 
+                gridTemplateColumns: 'repeat(3, 1fr)', 
+                gap: 3,
+                '& > *': {
+                  bgcolor: '#ffffff',
+                  p: 2,
+                  borderRadius: 1,
+                  textAlign: 'center',
+                  transition: 'transform 0.2s ease',
+                  '&:hover': {
+                    transform: 'translateY(-2px)',
+                    boxShadow: '0 4px 6px rgba(0,0,0,0.05)'
+                  }
+                }
+              }}>
+                <InfoItem label="Width" value={`${product.dimensions.width} cm`} />
+                <InfoItem label="Height" value={`${product.dimensions.height} cm`} />
+                <InfoItem label="Depth" value={`${product.dimensions.depth} cm`} />
+              </Box>
             </Box>
           </Box>
 
@@ -307,11 +513,30 @@ const ProductDetails: React.FC = () => {
 const InfoItem: React.FC<{ label: string; value: string | number }> = ({ label, value }) => (
   <Box sx={{ 
     display: 'flex', 
-    alignItems: 'center',
-    gap: 1
+    flexDirection: 'column',
+    gap: 0.5
   }}>
-    <Typography variant="caption" sx={{ color: '#666', minWidth: '100px' }}>{label}:</Typography>
-    <Typography variant="body2" sx={{ color: '#2c3e50' }}>{value}</Typography>
+    <Typography 
+      variant="caption" 
+      sx={{ 
+        color: '#666',
+        fontWeight: 500,
+        textTransform: 'uppercase',
+        fontSize: '0.7rem',
+        letterSpacing: '0.5px'
+      }}
+    >
+      {label}
+    </Typography>
+    <Typography 
+      variant="body2" 
+      sx={{ 
+        color: '#2c3e50',
+        fontWeight: 500
+      }}
+    >
+      {value}
+    </Typography>
   </Box>
 );
 
