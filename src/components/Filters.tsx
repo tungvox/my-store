@@ -127,14 +127,16 @@ const Filters: React.FC = () => {
   }
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, padding: 2 }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3, padding: 3, backgroundColor: '#f5f5f5', borderRadius: 2 }}>
+      <Typography variant="h6" sx={{ marginBottom: 2 }}>Filter Products</Typography>
+      
       <Autocomplete
         key='category-autocomplete'
         options={categoryOptions}
         getOptionLabel={(option) => option.label || ''}
         value={categoryOptions.find(cat => cat.value === filters.category) || null}
         onChange={handleCategoryChange}
-        renderInput={(params) => <TextField {...params} label="Category" />}
+        renderInput={(params) => <TextField {...params} label="Category" variant="outlined" />}
         renderOption={(props, option) => (
           <Box component="li" {...props} key={option.value}>
             {option.label}
@@ -149,7 +151,7 @@ const Filters: React.FC = () => {
           getOptionLabel={(option) => option.label || ''}
           value={subcategories.find(sub => sub.value === filters.subcategory) || null}
           onChange={handleSubcategoryChange}
-          renderInput={(params) => <TextField {...params} label="Subcategory" />}
+          renderInput={(params) => <TextField {...params} label="Subcategory" variant="outlined" />}
           renderOption={(props, option) => (
             <Box component="li" {...props} key={option.value}>
               {option.label}
@@ -164,7 +166,7 @@ const Filters: React.FC = () => {
         getOptionLabel={(option) => option.label || ''}
         value={brands.find(b => b.value === filters.brand) || null}
         onChange={handleBrandChange}
-        renderInput={(params) => <TextField {...params} label="Brand" />}
+        renderInput={(params) => <TextField {...params} label="Brand" variant="outlined" />}
         renderOption={(props, option) => (
           <Box component="li" {...props} key={option.key}>
             {option.label}
@@ -178,7 +180,7 @@ const Filters: React.FC = () => {
         getOptionLabel={(option) => option.label || ''}
         value={sortOptions.find(opt => opt.value === filters.sortBy) || null}
         onChange={handleSortChange}
-        renderInput={(params) => <TextField {...params} label="Sort By" />}
+        renderInput={(params) => <TextField {...params} label="Sort By" variant="outlined" />}
         renderOption={(props, option) => (
           <Box component="li" {...props} key={option.value}>
             {option.label}
@@ -191,9 +193,11 @@ const Filters: React.FC = () => {
           <Checkbox
             checked={filters.inStock ?? false}
             onChange={handleInStockChange}
+            sx={{ color: 'primary.main' }}
           />
         }
         label="In Stock Only"
+        sx={{ marginTop: 2 }}
       />
     </Box>
   );
