@@ -21,17 +21,18 @@ import { setFilter } from '../store/productSlice';
 const Search = styled('form')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  backgroundColor: alpha(theme.palette.common.white, 0.25),
   '&:hover': {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
+    backgroundColor: alpha(theme.palette.common.white, 0.35),
   },
   marginRight: theme.spacing(2),
-  marginLeft: 0,
+  marginLeft: theme.spacing(2),
   width: '100%',
   [theme.breakpoints.up('sm')]: {
     marginLeft: theme.spacing(3),
     width: 'auto',
   },
+  boxShadow: `0 2px 4px ${alpha(theme.palette.common.black, 0.2)}`,
 }));
 
 const SearchIconWrapper = styled('div')(({ theme }) => ({
@@ -52,8 +53,9 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     transition: theme.transitions.create('width'),
     width: '100%',
     [theme.breakpoints.up('md')]: {
-      width: '20ch',
+      width: '30ch',
     },
+    borderRadius: theme.shape.borderRadius,
   },
 }));
 
@@ -114,7 +116,7 @@ export default function Navbar() {
   return (
     <Box>
       <AppBar position="static" sx={{ backgroundColor: theme.palette.primary.main }}>
-        <Toolbar sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '64px' }}>
+        <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: '64px' }}>
           <Typography
             variant="h6"
             noWrap
@@ -124,19 +126,20 @@ export default function Navbar() {
           >
             My Store
           </Typography>
-          <Search onSubmit={handleSearchSubmit}>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search…"
-              inputProps={{ 'aria-label': 'search' }}
-              onChange={handleSearchChange}
-              value={searchTerm}
-            />
-          </Search>
-          <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+          <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center' }}>
+            <Search onSubmit={handleSearchSubmit}>
+              <SearchIconWrapper>
+                <SearchIcon />
+              </SearchIconWrapper>
+              <StyledInputBase
+                placeholder="Search…"
+                inputProps={{ 'aria-label': 'search' }}
+                onChange={handleSearchChange}
+                value={searchTerm}
+              />
+            </Search>
+          </Box>
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <IconButton
               size="large"
               aria-label="show cart items"
