@@ -240,10 +240,11 @@ const ProductDetails: React.FC = () => {
               Dimensions
             </Typography>
             <Box sx={{
-              display: 'grid',
               gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' },
               gap: 4,
-              alignItems: 'center'
+              alignItems: 'center',
+              display: 'flex',
+              flexDirection: 'column',
             }}>
               <Box sx={{
                 position: 'relative',
@@ -277,11 +278,12 @@ const ProductDetails: React.FC = () => {
                         width: '100%',
                         height: '100%',
                         border: '2px solid #e1e8ed',
-                        background: 'linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%)',
-                        boxShadow: '0 0 20px rgba(0,0,0,0.05)',
+                        background: 'linear-gradient(135deg, #e0f7fa 0%, #80deea 100%)',
+                        boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
+                        borderRadius: '8px',
                       }}>
                         <Typography 
                           sx={{ 
@@ -302,10 +304,12 @@ const ProductDetails: React.FC = () => {
                         transformOrigin: 'left',
                         transform: 'rotateY(90deg)',
                         border: '2px solid #e1e8ed',
-                        background: 'linear-gradient(135deg, #f8f9fa 0%, #f1f3f5 100%)',
+                        background: 'linear-gradient(135deg, #b2ebf2 0%, #4dd0e1 100%)',
+                        boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
+                        borderRadius: '8px',
                       }}>
                         <Typography 
                           sx={{ 
@@ -326,7 +330,9 @@ const ProductDetails: React.FC = () => {
                         transformOrigin: 'bottom',
                         transform: 'rotateX(90deg)',
                         border: '2px solid #e1e8ed',
-                        background: 'linear-gradient(135deg, #f1f3f5 0%, #e9ecef 100%)',
+                        background: 'linear-gradient(135deg, #b2ebf2 0%, #4dd0e1 100%)',
+                        boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
+                        borderRadius: '8px',
                       }} />
                     </Box>
                   );
@@ -336,7 +342,7 @@ const ProductDetails: React.FC = () => {
                   position: 'absolute',
                   top: '50%',
                   left: '-40px',
-                  transform: 'rotate(-45deg)',
+                  transform: 'translateY(-50%) rotate(-90deg)',
                   color: '#6c757d',
                   fontSize: '0.85rem',
                   fontWeight: 500,
@@ -347,7 +353,7 @@ const ProductDetails: React.FC = () => {
                   position: 'absolute',
                   bottom: '-40px',
                   left: '50%',
-                  transform: 'translateX(-50%) rotate(-45deg)',
+                  transform: 'translateX(-50%)',
                   color: '#6c757d',
                   fontSize: '0.85rem',
                   fontWeight: 500,
@@ -358,7 +364,7 @@ const ProductDetails: React.FC = () => {
                   position: 'absolute',
                   top: '50%',
                   right: '-50px',
-                  transform: 'rotate(45deg)',
+                  transform: 'translateY(-50%)',
                   color: '#6c757d',
                   fontSize: '0.85rem',
                   fontWeight: 500,
@@ -392,6 +398,7 @@ const ProductDetails: React.FC = () => {
                 display: 'grid', 
                 gridTemplateColumns: 'repeat(3, 1fr)', 
                 gap: 3,
+                mt: 4,
                 '& > *': {
                   bgcolor: '#ffffff',
                   p: 2,
@@ -435,43 +442,46 @@ const ProductDetails: React.FC = () => {
           display: 'flex',
           flexDirection: 'column',
           gap: 3,
-          p: 2
+          p: 3,
+          bgcolor: '#f9f9f9',
+          borderRadius: 2,
+          boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
         }}>
           <Box>
-            <Typography variant="h5" sx={{ fontWeight: 500, color: '#2c3e50' }}>
+            <Typography variant="h5" sx={{ fontWeight: 600, color: '#2c3e50' }}>
               {product.title}
             </Typography>
-            <Typography variant="subtitle1" sx={{ color: '#666' }}>
+            <Typography variant="subtitle1" sx={{ color: '#888' }}>
               Brand: {product.brand} | SKU: {product.sku}
             </Typography>
           </Box>
 
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-            <Box sx={{ display: 'flex', alignItems: 'baseline', gap: 2 }}>
-              <Typography variant="h4" sx={{ fontWeight: 600, color: '#2c3e50' }}>
-                ${product.price.toFixed(2)}
-              </Typography>
-              {product.discountPercentage > 0 && (
-                <>
-                  <Typography 
-                    variant="h6" 
-                    sx={{ 
-                      textDecoration: 'line-through', 
-                      color: '#666',
-                      fontWeight: 400 
-                    }}
-                  >
-                    ${(product.price / (1 - product.discountPercentage / 100)).toFixed(2)}
-                  </Typography>
-                  <Typography variant="subtitle1" sx={{ color: 'success.main' }}>
-                    {product.discountPercentage}% OFF
-                  </Typography>
-                </>
-              )}
-            </Box>
+          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 1 }}>
+            <Typography variant="h4" sx={{ fontWeight: 700, color: '#2c3e50' }}>
+              ${product.price.toFixed(2)}
+            </Typography>
+            {product.discountPercentage > 0 && (
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                <Typography 
+                  variant="h6" 
+                  sx={{ 
+                    textDecoration: 'line-through', 
+                    color: '#aaa',
+                    fontWeight: 400 
+                  }}
+                >
+                  ${(product.price / (1 - product.discountPercentage / 100)).toFixed(2)}
+                </Typography>
+                <Chip 
+                  label={`${product.discountPercentage}% OFF`} 
+                  color="success" 
+                  size="small" 
+                />
+              </Box>
+            )}
           </Box>
 
-          <Typography variant="body1" sx={{ color: '#666', lineHeight: 1.7 }}>
+          <Typography variant="body1" sx={{ color: '#555', lineHeight: 1.8 }}>
             {product.description}
           </Typography>
 
